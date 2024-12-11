@@ -4,18 +4,18 @@
 
 - What layers of the OSI model are captured in this capturefile?
 
-Protocollen vanaf layer 2:
+Protocollen vanaf layer 2:  
 
-Ethernet: layer 2
-ARP: layer 2
-ipv4: layer 3
-ipv6: layer 3
-ICMP: layer 3
-UDP: layer 4
-TCP: layer 4
-http: layer 7
-LDAP: layer 7
-SSH: layer 6
+Ethernet: layer 2  
+ARP: layer 2  
+ipv4: layer 3  
+ipv6: layer 3  
+ICMP: layer 3  
+UDP: layer 4  
+TCP: layer 4  
+http: layer 7  
+LDAP: layer 7  
+SSH: layer 6  
 
 ![hierarchy](/images/wireshark%20protocols.png)
 
@@ -44,11 +44,11 @@ Er is een reverse shell waarbij de client (doelapparaat) surft naar een onveilig
 
 - Someone used a specific way to transfer a png on the wire. Is it possible to export this png easily? Is it possible to export other HTTP related stuff?
 
-JA: File -> export objects http -> save images
+JA: File -> export objects http -> save images  
 
-images:
-![hierarchy](/images/http%20image1)
-![hierarchy](/images/http%20image2)
+images:  
+![hierarchy](/images/http%20image1)  
+![hierarchy](/images/http%20image2)  
 
 
 ## Capture traffic using the CLI
