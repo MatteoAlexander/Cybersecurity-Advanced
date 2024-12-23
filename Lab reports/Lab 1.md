@@ -463,3 +463,67 @@ red = hacker, probeert data uit het company netwerk te halen
 
 
 - Investigate whether the DNS server of the company network is vulnerable to a DNS zone transfer "attack" as discussed above. What exactly does this attack involve? If possible, try to configure the server to allow & prevent this attack. Document this update: How can you execute this attack or check if the DNS server is vulnerable and how can you fix it? Can you perform this "attack" both on Windows and Linux? Document your findings properly.
+
+```bash
+┌──(osboxes㉿osboxes)-[~]
+└─$ sudo dig axfr @172.30.0.4 cybersec.internal > zonetransfer.cyb                                                                                                                                                                          
+
+┌──(osboxes㉿osboxes)-[~]
+└─$ cat zonetransfer.cyb
+
+; <<>> DiG 9.20.0-Debian <<>> axfr @172.30.0.4 cybersec.internal
+; (1 server found)
+;; global options: +cmd
+cybersec.internal.      86400   IN      SOA     dns.cybersec.internal. admin.cybersec.internal. 2023092301 3600 1800 1209600 86400
+cybersec.internal.      86400   IN      NS      dns.cybersec.internal.
+txt.at.cybersec.internal. 86400 IN      TXT     "Greetings from CSA team!"
+dns.cybersec.internal.  86400   IN      A       172.30.0.4
+www.cybersec.internal.  86400   IN      A       172.30.0.10
+cybersec.internal.      86400   IN      SOA     dns.cybersec.internal. admin.cybersec.internal. 2023092301 3600 1800 1209600 86400
+;; Query time: 4 msec
+;; SERVER: 172.30.0.4#53(172.30.0.4) (TCP)
+;; WHEN: Mon Dec 23 09:16:28 EST 2024
+;; XFR size: 6 records (messages 1, bytes 267)
+```
+
+Pas de /etc/bind/named.conf aan naar:
+```bash
+options {
+    directory "/var/bind";
+    allow-transfer { any; };  # Allow zone transfers from any machine
+    listen-on { any; };       # Listen on all interfaces
+    listen-on-v6 { any; };    # Listen on all IPv6 interfaces
+    recursion yes;            # Enable recursion for forwarding other queries
+    forwarders {
+        192.168.62.254;       # Forward all other queries to this DNS server
+    };
+    allow-query { any; };     # Allow queries from any IP
+};
+
+zone "cybersec.internal" {
+    type master;
+    file "/var/bind/cybersec.internal";
+    allow-transfer { none; };  # Allow zone transfers from any machine
+};
+```
+
+restart de service:
+```bash
+dns:~$ dns:~$ sudo service named restart
+```
+
+Met aanpassingen:
+
+```bash
+──(osboxes㉿osboxes)-[~]
+└─$ sudo dig axfr @172.30.0.4 cybersec.internal > zonetransfer.cyb                                                                                                                                                                          
+[sudo] password for osboxes: 
+
+┌──(osboxes㉿osboxes)-[~]
+└─$ cat zonetransfer.cyb
+
+; <<>> DiG 9.20.0-Debian <<>> axfr @172.30.0.4 cybersec.internal
+; (1 server found)
+;; global options: +cmd
+; Transfer failed.
+```
