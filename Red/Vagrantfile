@@ -1,0 +1,14 @@
+Vagrant.configure("2") do |config|
+    config.vm.define "red" do |my_machine|
+      config.vm.box = "debian/bookworm64"
+      config.vm.hostname = "red"
+      config.vm.network "private_network", virtualbox_intnet: "VirtualBox Host-Only Ethernet Adapter #3", type: "static", ip: "192.168.62.166"
+      config.vm.provider "virtualbox" do |vb|
+        vb.gui = true
+        vb.name = "red_vagrant"
+        vb.memory = "1024"
+        vb.cpus = "1"
+        vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+      end
+    end
+  end
