@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.define "Wazuh" do |my_machine|
+      my_machine.vm.box = "ubuntu/focal64"
+      my_machine.vm.hostname = "Wazuh"
+      my_machine.vm.network "private_network", virtualbox__intnet: "internal-company-lan", ip: "172.30.0.20", netmask: "255.255.0.0"
+      
+      my_machine.vm.provider "virtualbox" do |vb|
+        vb.gui = true
+        vb.name = "Wazuh"
+        vb.memory = "4096"
+        vb.cpus = "1"
+        vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
+      end
+  
+      # Voeg je openbare sleutel toe
+      my_machine.vm.provision "shell", inline: <<-SHELL
+        mkdir -p /home/vagrant/.ssh
+        echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdISTbaDKpC1fy9KzoxUTJuDfLDN6J1VxWCPBoc95DF16SSyYnyRjgnJwMHPNqxWIG67rzRQIeV97iPGAU1RxjK4EpLk51EVJtZRQYNcqFaocgaiXBpviukfumQ56KSyYXFDmbMHidDqxKlQLpiqRFWSh66sqbtWMcs6T5yiqa5v39uZBo6TqvNzECsAjs1+QcEsRmex6BFYnQE0FZ4G7b28kxTvCqwWX45qdNfa29l8xWhk8LdDY/Gf9kOnD/syfuIokFkvQrOvhGUKPqcftP5jbjpFCxScOV+HoHBJGw/lwMAoPDs+k0RakQTobhiObiDpM017i5avMQa4qALUX22FShv50HKrwiq/a5DadtHl2sCSkJvpRGRsDgn0st3pjc1xYldxdavy1iG4QZh8Rq5wwrrM6/o4Lb5RWX0E8HyK+MkHGRO9CSmi9cxZTXcfkIJ22xzUZiLvBiUiLamrWGkEJnx2+RVN08rIIvpmbkEz0uDjts9An0+19deL0I9Gc= matte@LAPTOP-DU4U734J
+" >> /home/vagrant/.ssh/authorized_keys
+        chmod 700 /home/vagrant/.ssh
+        chmod 600 /home/vagrant/.ssh/authorized_keys
+        chown -R vagrant:vagrant /home/vagrant/.ssh
+      SHELL
+    end
+  end
