@@ -30,7 +30,7 @@ The key's randomart image is:
 
 Zet de public key over naar de web en database vm:
 ```bash
-ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub vagrant@172.30.0.15
+ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub vagrant@172.30.0.10
 ```
 ```bash
 ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub vagrant@172.30.0.15
