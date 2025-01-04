@@ -129,7 +129,7 @@ Local port forwarding
 omdat het je, net als een VPN, in staat stelt om veilig verbinding te maken met externe netwerken en diensten. In tegenstelling tot een VPN creëert SSH port forwarding echter geen netwerkinterface die al het verkeer door de tunnel stuurt, noch biedt het dezelfde mate van flexibiliteit en controle. Het is een eenvoudigere, meer lichtgewicht oplossing die voldoende is voor bepaalde gebruikssituaties zonder de overhead van een volledig VPN.
 
 
-Example 1: use port forwarding to get to see the webpage from the webserver in the browser on the host (your laptop).
+- Example 1: use port forwarding to get to see the webpage from the webserver in the browser on the host (your laptop).
 ```bash
 PS C:\Users\matte> ssh -L 8080:172.30.0.10:80 vagrant@companyrouter
 Last login: Tue Dec 24 12:55:33 2024 from 192.168.62.165
@@ -138,4 +138,51 @@ Last login: Tue Dec 24 12:55:33 2024 from 192.168.62.165
 
 ![hierarchy](/images/localpf.png)
 
-Example 2: use port forwarding to access the database from the host (your laptop).
+- Example 2: use port forwarding to access the database from the host (your laptop).
+
+KALI: geen mysql op laptop
+
+```
+┌──(osboxes㉿osboxes)-[~]
+└─$ ssh -L 3306:172.30.0.15:3306 vagrant@192.168.62.253 -p 2222
+vagrant@192.168.62.253's password: 
+Last login: Sat Jan  4 14:56:15 2025 from 192.168.62.165
+```
+
+```
+┌──(osboxes㉿osboxes)-[~]
+└─$ mysql -h 127.0.0.1 -P 3306 -u toor -p --skip-ssl
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.11.10-MariaDB Alpine Linux
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Support MariaDB developers by giving a star at https://github.com/MariaDB/server
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+```
+
+
+- Example 3: combine both examples in a single command so you can see the webpage and access the database both at the same time from the host (your laptop).
+
+```
+┌──(osboxes㉿osboxes)-[~]
+└─$ ssh -L 8080:172.30.0.10:80 -L 3306:172.30.0.15:3306 vagrant@192.168.62.253 -p 2222
+vagrant@192.168.62.253's password: 
+Last login: Sat Jan  4 14:58:43 2025 from 192.168.62.165
+[vagrant@companyrouter ~]$ 
+```
+
+![hierarchy](/images/example3.png)
+
+
+- Can use the -J option. Example: try to log in on web from the host (your laptop).
+
+```
+PS C:\Users\matte> ssh -J vagrant@192.168.62.253:2222 vagrant@172.30.0.10
+Last login: Sat Jan  4 15:49:42 2025 from 192.168.62.165
+[vagrant@web ~]$
+```
