@@ -128,4 +128,4 @@ rootCA.pem                                                                      
 
 13) Normaal zou nu alles in orde moeten zijn en kan je de site bereiken zonder ssl error: https://www.cybersec.internal/
 
-![hierarchy](/images/geenhttpserror.png)
+![hierarchy](/images/https%20werkt.png)

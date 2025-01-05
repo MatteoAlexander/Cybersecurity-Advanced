@@ -1,4 +1,4 @@
-# Lab 9: VPN
+# Lab 10: VPN
 
 ## OpenVPN - practical installation
 
@@ -702,3 +702,27 @@ drwxr-x---. 2 root openvpn    6 Jul 18 14:36 client
 -rw-------. 1 root root    1704 Dec 31 12:44 client.key
 drwxr-x---. 2 root openvpn    6 Jul 18 14:36 server
 ```
+
+If everything has been set up, see if you can start up the connection to your server.
+
+- Start the server:
+```
+[vagrant@companyrouter ~]$ sudo openvpn /usr/share/doc/openvpn/sample/sample-config-files/server.conf
+```
+
+- Start the client:
+```
+[vagrant@remote-employee sample-config-files]$ cd /etc/openvpn/
+[vagrant@remote-employee openvpn]$ sudo openvpn client.conf
+```
+
+- Doe het ethercap commando:
+
+```
+┌──(osboxes㉿osboxes)-[~]
+└─$ sudo ettercap -Tq -i eth0 -M arp:remote /192.168.62.42// /192.168.62.253// 
+```
+
+- Open another terminal on client and start pinging servers behind the company router. A good test is to fetch the webpage on the webserver.
+
+![hierarchy](/images/openvpn.png)

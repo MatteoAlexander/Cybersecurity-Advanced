@@ -373,6 +373,7 @@ Aanpassingen:
 
 
 
+
 ## Firewall
 
 Maak de nftables.conf file aan. Deze ziet er zo uit:
