@@ -205,6 +205,13 @@ Ja
 
 - Are your commands logged? Is the IP address of the SSH client logged? If this is the case, where?
 
+Ja, de acties (commando's) die uitgevoerd worden in de Cowrie container worden gelogd. De logbestanden voor Cowrie worden opgeslagen in een bestand genaamd cowrie.log. Dit bestand bevindt zich in de directory /cowrie/cowrie-git/log binnen de container.
+Omdat je geen toegang hebt tot een shell in de container om dit bestand direct te bekijken, kun je de logs in de container ook inzien door de docker logs commando te gebruiken:
+sudo docker logs cowrie
+
+Dit commando toont de loguitvoer van de container, inclusief eventuele acties die in de container worden uitgevoerd, zoals SSH-pogingen en interacties met de honeypot.
+Dus, de acties worden gelogd in het bestand cowrie.log, maar je kunt ze ook via de Docker logs van de container inzien.
+
 Ja de commando's zijn logged in de container logs: 
 ```bash
 2024-12-26T14:43:31+0000 [HoneyPotSSHTransport,10,192.168.62.1] CMD: pwd

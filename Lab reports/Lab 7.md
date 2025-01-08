@@ -91,6 +91,8 @@ The key's randomart image is:
 |         o .. X.B|
 |          ...*+= |
 +----[SHA256]-----+
+```
+```
 [vagrant@web important-files]$ ssh-copy-id vagrant@172.30.0.15
 /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/vagrant/.ssh/id_rsa.pub"
 The authenticity of host '172.30.0.15 (172.30.0.15)' can't be established.
@@ -105,7 +107,8 @@ Number of key(s) added: 1
 
 Now try logging into the machine, with:   "ssh 'vagrant@172.30.0.15'"
 and check to make sure that only the key(s) you wanted were added.
-
+```
+```
 [vagrant@web important-files]$ (umask 0077; head -c 32 /dev/urandom | base64 -w 0 > ~/.borg-passphrase)
 [vagrant@web important-files]$ export BORG_PASSCOMMAND="cat $HOME/.borg-passphrase"
 [vagrant@web important-files]$ source ~/.bashrc
