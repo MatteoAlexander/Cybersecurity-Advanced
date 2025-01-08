@@ -4,31 +4,81 @@
 
 - Does the CA uses a private key?
 
+Ja de .key file
+
 - Does the CA uses a certificate?
+
+Ja de .PEM file
 
 - Does the web server uses a private key?
 
+Ja de webserver.key
+
 - Does the web server uses a certificate?
+
+Ja, de webserver gebruikt een certificaat dat is ondertekend door de CA
 
 - When using openssl commands to generate files, are you able to easily spot the function/goal of each file?
 
+Ja.
+- OpenSSL-opdrachten maken duidelijk onderscheid tussen privésleutels (.key), certificaten (.crt of .pem) en CSR-bestanden (.csr).
+- Bestanden hebben specifieke paden en extensies die hun doel verduidelijken.
+
+
 - How can you view a certificate using openssl?
+```
+sudo openssl x509 -in /etc/ssl/certs/rootCA.pem -text -noout
+```
 
 - Does the webserver need a specific configuration change to allow HTTPS traffic?
 
+Ja.
+- De configuratie van Apache is aangepast in /etc/httpd/conf.d/ssl.conf om HTTPS-verkeer toe te staan.
+- Belangrijke aanpassingen zijn onder andere: 
+```
+Listen 443 https
+SSLEngine on
+SSLCertificateFile /etc/ssl/certs/webserver.crt
+SSLCertificateKeyFile /etc/ssl/private/webserver.key
+SSLCertificateChainFile /etc/ssl/certs/rootCA.pem
+```
+
+
 - What is meant by a CSR?
+
+CSR (Certificate Signing Request)
 
 - Tip: Do not forget the SAN (Subject Alternative Name) attribute!
 
 - What is a wildcard certificate?
 
+Een wildcardcertificaat wordt gebruikt om meerdere subdomeinen van een domein te beveiligen met één certificaat.
+Voorbeeld: *.cybersec.internal beveiligt www.cybersec.internal, mail.cybersec.internal, enz.
+
+
 - Tip²: (For the optional part below you might want to support a wildcard certificate)
 
 - What file(s) did you add to the browser (or computer) and how?
 
+CA PEM file, met scp
+
 - Can you easily retrieve your certificates after adding them?
 
+Ja.
+	Op de webserver kunnen certificaten worden opgehaald: 
+	cat /etc/ssl/certs/webserver.crt
+	cat /etc/ssl/certs/rootCA.pem
+	Op Kali Linux kunnen ze worden opgehaald via: 
+	cat /usr/local/share/ca-certificates/rootCA.pem
+
 - Can you review and explain all the files from the OpenVPN lab and what they represent? CA? Keys? Certificates?
+
+Bestanden en Functies:
+- rootCA.key: De privésleutel van de Certificaatautoriteit.
+- rootCA.pem: Het root-certificaat dat wordt gebruikt om andere certificaten te ondertekenen.
+- webserver.key: De privésleutel van de webserver.
+- webserver.crt: Het door de CA ondertekende certificaat van de webserver.
+- webserver.csr: Het CSR-bestand dat wordt gebruikt om het certificaat aan te vragen.
 
 
 STAPPENPLAN:
